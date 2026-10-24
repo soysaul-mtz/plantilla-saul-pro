@@ -97,7 +97,7 @@ def corta(src, salida, desfase, vf, con_audio, vf4=None):
     f = os.path.join(proy, 'corte', '_fc.txt'); open(f, 'w').write(';\n'.join(fc))
     cmd = ['ffmpeg', '-v', 'error', '-y', '-i', src, '-/filter_complex', f, '-map', '[v]'] + (['-map', '[a]', '-c:a', 'pcm_s16le'] if con_audio else []) + \
           ['-c:v', 'libx264', '-crf', '14', '-preset', 'veryfast', '-pix_fmt', 'yuv420p', salida] + \
-          (['-map', '[v4]', '-c:v', 'h264_videotoolbox', '-b:v', '60M', '-pix_fmt', 'yuv420p', '-an', salida.replace('.mov', '_4k.mov')] if vf4 else [])
+          (['-map', '[v4]', '-c:v', ('h264_videotoolbox' if sys.platform == 'darwin' else 'libx264'), '-b:v', '60M', '-pix_fmt', 'yuv420p', '-an', salida.replace('.mov', '_4k.mov')] if vf4 else [])
     subprocess.run(cmd, check=True)
 
 os.makedirs(os.path.join(proy, 'corte'), exist_ok=True)

@@ -11,13 +11,18 @@ import { fileURLToPath } from 'node:url';
 import puppeteer from '../motor/node_modules/puppeteer-core/lib/puppeteer/puppeteer-core.js';
 
 const RAIZ = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const CHROME = process.env.CHROME || ['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', '/Applications/Chromium.app/Contents/MacOS/Chromium'].find(f => fs.existsSync(f)) || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+const CHROME = process.env.CHROME || ['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', '/Applications/Chromium.app/Contents/MacOS/Chromium', '/usr/bin/google-chrome', '/usr/bin/google-chrome-stable', '/usr/bin/chromium', '/usr/bin/chromium-browser', '/usr/local/bin/chromium'].find(f => fs.existsSync(f)) || 'google-chrome';  // Mac, Linux o Windows (WSL)
 const args = process.argv.slice(2), proy = path.resolve(args[0] || '');
 const opt = k => { const i = args.indexOf(k); return i > 0 ? args[i + 1] : null; };
 const modo = opt('--modo') || 'codigo';
 const cfg = JSON.parse(fs.readFileSync(path.join(proy, 'cine.json')));
 const W = cfg.lienzo?.w || 1080, H = cfg.lienzo?.h || 1920, FPS = String(cfg.fps || 30), fps = eval(FPS);
 const PERFILES = JSON.parse(fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), 'perfiles.json')));
+// fuera de Mac no hay codificador por hardware de Apple (videotoolbox): se usa x264/x265
+if (process.platform !== 'darwin') for (const p of Object.values(PERFILES)) {
+  p.video = p.video.map(a => a === 'hevc_videotoolbox' ? 'libx265' : a === 'h264_videotoolbox' ? 'libx264' : a);
+  const i = p.video.indexOf('-allow_sw'); if (i >= 0) p.video.splice(i, 2);
+}
 const nPerfil = opt('--perfil') || cfg.perfil || 'redes', PF = PERFILES[nPerfil];
 if (!PF) { console.error(`✗ perfil "${nPerfil}" no existe (usa: ${Object.keys(PERFILES).join(', ')})`); process.exit(1); }
 const ES = PF.escala;
@@ -82,7 +87,7 @@ const srv = http.createServer((req, res) => {
 await new Promise(r => srv.once('listening', r));
 const base = `http://127.0.0.1:${srv.address().port}`;
 
-const browser = await puppeteer.launch({ executablePath: CHROME, headless: true, args: ['--force-color-profile=srgb', '--hide-scrollbars', '--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] });
+const browser = await puppeteer.launch({ executablePath: CHROME, headless: true, args: [...(process.platform === 'linux' ? ['--no-sandbox'] : []), '--force-color-profile=srgb', '--hide-scrollbars', ...(process.platform === 'darwin' ? ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] : [])] });
 const page = await browser.newPage();
 page.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') console.log('  [página]', m.text()); });
 page.on('pageerror', e => console.log('  [página]', e.message));
@@ -139,8 +144,9 @@ fx.forEach((s, i) => {
   mezcla.push(`[s${i}]`);
 });
 fc += `${mezcla.join('')}amix=inputs=${mezcla.length}:normalize=0:duration=first,atrim=0:${D},loudnorm=I=-14:TP=-1[a]`;
-const salida = cfg.salida && !opt('--hasta') ? cfg.salida.replace(/(\.mp4)$/i, ES > 1 ? ` (${PF.nombre})$1` : '$1') : path.join(proy, 'salida', `cine_${modo}${ES > 1 ? '_' + nPerfil : ''}.mp4`);
+const salida = cfg.salida && !opt('--hasta') ? path.resolve(proy, cfg.salida).replace(/(\.mp4)$/i, ES > 1 ? ` (${PF.nombre})$1` : '$1') : path.join(proy, 'salida', `cine_${modo}${ES > 1 ? '_' + nPerfil : ''}.mp4`);
 // ---- video por bloques: cada bloque se codifica a su archivo (se puede reanudar si algo se cae) ----
+fs.mkdirSync(path.dirname(salida), { recursive: true });   // "salida" relativa = relativa a la carpeta del proyecto
 const dirB = path.join(proy, 'salida', `_bloques_${nPerfil}`); fs.mkdirSync(dirB, { recursive: true });
 const tamB = PF.bloque || N, bloques = [];
 for (let i0 = 0, k = 0; i0 < N; i0 += tamB, k++) bloques.push({ k, i0, i1: Math.min(N, i0 + tamB), f: path.join(dirB, `b${String(k).padStart(4, '0')}.mp4`) });

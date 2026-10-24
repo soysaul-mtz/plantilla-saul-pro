@@ -65,6 +65,6 @@ if os.path.exists(cam4):
     fv = ''.join(f"[0:v]trim=start={float(a / FPS):.6f}{'' if b is None else f':end={float(b / FPS):.6f}'},setpts=PTS-STARTPTS[v{j}];" for j, (a, b) in enumerate(segs))
     fv += ''.join(f'[v{j}]' for j in range(len(segs))) + f'concat=n={len(segs)}:v=1:a=0[v]'
     run(['ffmpeg', '-v', 'error', '-y', '-i', os.path.join(resp, 'cam_4k.mov'), '-filter_complex', fv, '-map', '[v]',
-         '-c:v', 'h264_videotoolbox', '-b:v', '60M', '-pix_fmt', 'yuv420p', cam4])
+         '-c:v', ('h264_videotoolbox' if sys.platform == 'darwin' else 'libx264'), '-b:v', '60M', '-pix_fmt', 'yuv420p', cam4])
     print('cam_4k.mov recortado igual')
 

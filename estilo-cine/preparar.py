@@ -16,7 +16,7 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SEG = os.path.join(RAIZ, 'bin', 'segmentar')
 cam = os.path.join(proy, 'corte', 'cam.mov')
 if not os.path.exists(cam): sys.exit(f'✗ no existe {cam}')
-if not os.path.exists(SEG): sys.exit('✗ falta bin/segmentar. Corre: swiftc -O estilo-cine/segmentar.swift -o bin/segmentar (o ./instalar.sh)')
+if not os.path.exists(SEG): sys.exit('✗ falta bin/segmentar. Corre ./instalar.sh (Mac) o ./instalar-windows.sh (Windows/Linux)')
 
 for d in ['cuadros', 'mascaras', 'cuadros_pro']: shutil.rmtree(os.path.join(proy, d), ignore_errors=True)
 os.makedirs(os.path.join(proy, 'cuadros')); os.makedirs(os.path.join(proy, 'mascaras'))
