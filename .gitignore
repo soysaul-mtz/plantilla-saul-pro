@@ -1,0 +1,11 @@
+node_modules
+.venv
+bin/
+revision/bin/
+proyectos/*/salida
+proyectos/*/cuadros*
+proyectos/*/mascaras
+proyectos/*/corte
+config/kit.json
+estilo-cine/sfx
+.DS_Store
