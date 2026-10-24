@@ -27,8 +27,6 @@ negro + grano de película + un golpe visual en cada idea. Ritmo: algo cambia ca
 
 ## Cómo hacerlo, paso a paso
 Todo desde la raíz del sistema; `.venv/bin/python` es el Python del sistema. Cada video en su carpeta `proyectos/<nombre>/`.
-En **Windows (WSL) / Linux** los comandos son los mismos: donde dice "Vision" trabajan las herramientas de `plataforma/`
-(ver `CLAUDE.md` › "En Windows"); todo va por el procesador, así que avisa que preparar, transcribir y revisar tardan más.
 
 1. **Corte** (`metodo.json` con la cámara y los tramos elegidos; la base está en `proyectos/ejemplo-c8252/metodo.json` si existe, o
    pon `{"camara": "<video>", "tramos": [[ini, fin], …]}`):

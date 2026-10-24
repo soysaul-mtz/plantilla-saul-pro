@@ -9,5 +9,3 @@ proyectos/*/corte
 config/kit.json
 estilo-cine/sfx
 .DS_Store
-plataforma/modelos/
-__pycache__/

@@ -7,6 +7,6 @@ description: Edita reels verticales con la plantilla Saúl Pro (persona con su f
 
 1. Abre y sigue `CLAUDE.md` de la carpeta de la plantilla (ruta al final de este archivo) y, antes de editar, lee completa
    `plantillas/saul-pro/GUIA.md` (qué es, flujo con comandos, formato de `cine.json`, reglas y qué evitar).
-2. Si falta algo instalado (`.venv`, `bin/segmentar`, `config/kit.json`), sigue `INSTALAR.md` (Mac: `instalar.sh`; Windows con WSL / Linux: `instalar-windows.sh` y la sección "En Windows" de `CLAUDE.md`).
+2. Si falta algo instalado (`.venv`, `bin/segmentar`, `config/kit.json`), sigue `INSTALAR.md`.
 3. Primero preguntas (música, duración máxima, formato, palabra del CTA) → transcripción y retomas → **plan tal cual** → espera el "sí".
 4. Al terminar: revisión final cuadro por cuadro (`revision/revisar_final.py`) y verificación del audio. No se publica nada sin confirmación.

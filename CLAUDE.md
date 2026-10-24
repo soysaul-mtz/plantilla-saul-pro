@@ -33,14 +33,5 @@ zona segura de Instagram (y 262–1540, nada a la derecha de x 900 desde y 700) 
 herramientas a pantalla completa · música desde el segundo 0 con la voz ≥ 8 dB arriba · final sin cuadro congelado ·
 Higgsfield solo imágenes.
 
-## En Windows (WSL) / Linux
-Todo se usa IGUAL (mismos comandos, `.venv/bin/python`, `bin/segmentar`, `bin/sdr`, `revision/bin/fotogramas`). Cambia solo esto:
-- Instalar/verificar con `./instalar-windows.sh` y `./verificar-windows.sh`. Si piden `sudo … --sistema`, lo pega la persona (su contraseña).
-- Donde la GUIA dice "Vision", aquí trabajan `plataforma/*.py` (MediaPipe, OpenCV, RapidOCR, ffmpeg); Whisper es faster-whisper
-  con la misma interfaz. Todo en el procesador: transcribir, recortar y la revisión final tardan más que en Mac (avísale el tiempo).
-- Videos de la persona: `/mnt/c/Users/<usuario>/…`; una ruta `C:\…` se convierte con `wslpath -u`. Trabaja en `proyectos/`
-  y guarda el video final junto al original. Para mostrarle una carpeta: `explorer.exe "$(wslpath -w <carpeta>)"`.
-- Fuentes: Helvetica Neue se ve con Nimbus Sans (casi idéntica). 4K usa x265 por software (lento).
-
 ## Seguridad
-Las llaves (Higgsfield, ElevenLabs…) van en el **Llavero de macOS** (en Windows/Linux, el comando `security` las guarda en `~/.config/sistema-edicion/llaves/`, archivos privados), nunca en el código ni en el chat. No publiques nada en redes sin que la persona confirme.
+Las llaves (Higgsfield, ElevenLabs…) van en el **Llavero de macOS**, nunca en archivos ni en el chat. No publiques nada en redes sin que la persona confirme.
