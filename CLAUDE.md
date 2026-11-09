@@ -3,7 +3,12 @@
 Este repositorio trae **una sola plantilla de edición: Saúl Pro** (reel vertical de marca personal con look de cine). No hay
 otras plantillas: si la persona pide otro estilo, dile que este paquete solo trae Saúl Pro (el sistema completo tiene 61; ver README).
 
-Si no está instalado (falta `.venv`, `bin/segmentar` o `config/kit.json`), sigue **INSTALAR.md** antes de nada.
+## Instalación (con el prompt de la guía)
+1. Corre `scripts/requisitos.sh`. Si marca algo con ✗, **enséñale a la persona el comando que imprime y pídele permiso** antes de correrlo; luego vuelve a correr `scripts/requisitos.sh` hasta que diga «Todo listo».
+2. Si falta `config/kit.json`, pregúntale su nombre como sale en los videos y su usuario de Instagram y créalo:
+   `{ "nombre": "…", "handle": "@…", "idioma": "es", "perfil_salida_por_defecto": "redes" }`
+3. **Prueba:** renderiza el video de ejemplo con `node estilo-cine/render.mjs proyectos/demo` y dile dónde quedó (`proyectos/demo/salida/cine_codigo.mp4`); ábrelo con `open -R`.
+Detalle y solución de problemas: INSTALAR.md.
 Los datos de la persona (nombre, @usuario) están en `config/kit.json`: úsalos en cada `cine.json` (`"handle"`).
 
 ## Lo primero que lees

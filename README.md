@@ -7,13 +7,18 @@ por cuadro antes de entregártelo.
 
 Ejemplo terminado: **"Video editado - C8252.mp4"** en la sección *Releases* de este repositorio.
 
+## Instálala con un solo mensaje
+
+Abre Claude (la app de escritorio en la pestaña **Code**, o Claude Code en Visual Studio Code) y pega:
+
+> Clona https://github.com/soysaul-mtz/plantilla-saul-pro en mi carpeta de proyectos, entra a la carpeta y corre scripts/requisitos.sh. Si falta algo, enséñame el comando que imprime y pídeme permiso antes de instalarlo. Cuando todo esté listo, lee el CLAUDE.md del repo y renderiza el video de ejemplo (proyectos/demo) para probar que funciona.
+
+Necesitas una **Mac con chip Apple** (M1 o más nueva). Para Windows: https://github.com/soysaul-mtz/plantilla-saul-pro-windows
+
 ## Requisitos
 Mac con chip Apple (M1 o más nueva) · macOS 14+ · ~8 GB libres · un plan de Claude que incluya **Claude Code** (Pro o Max).
 
-## Instalación (Claude lo hace por ti)
-1. Instala Claude Code: abre la **Terminal** y pega `curl -fsSL https://claude.ai/install.sh | bash`; luego escribe `claude`.
-2. Descarga este repositorio (botón verde **Code → Download ZIP**, o `git clone`), entra a la carpeta y abre `claude` ahí.
-3. Dile a Claude: **"Instala la plantilla siguiendo INSTALAR.md"**. Al final renderiza un video de prueba.
+Si prefieres hacerlo paso a paso: **INSTALAR.md**.
 
 ## Cómo se usa
 Abre `claude` en esta carpeta y pídele: *"Edita este video con Saúl Pro: /ruta/a/mi/video.MOV"*.
